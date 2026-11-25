@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ScamShield – Scam Message Detector</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
+  <link rel="stylesheet" href="/static/style.css">
+  <script src="/static/app.js" defer></script>
+</head>
+<body>
+<main class="page">
+
+  <!-- ===== Header ===== -->
+  <header class="hero">
+    <div class="logo" aria-hidden="true">🛡️</div>
+    <div>
+      <h1>ScamShield</h1>
+      <p>Check any SMS, WhatsApp message, email or job offer for scams — in seconds.</p>
+    </div>
+  </header>
+  <div class="chips">
+    <span class="chip">🌐 English · हिंदी · తెలుగు · Hinglish</span>
+    <span class="chip">🔒 Messages never saved</span>
+    <span class="chip">⚡ Result in 1 second</span>
+    <span class="chip">🤖 Optional AI explanation</span>
+  </div>
+
+  <div class="grid">
+    <!-- ===== Left: input ===== -->
+    <section class="left" aria-label="Message input">
+      <label for="message" class="label">📩 Paste the message</label>
+      <textarea id="message" rows="8" maxlength="2000"
+                placeholder="e.g. Your account will be blocked today. Update KYC at ..."></textarea>
+      <div class="counter"><span id="count">0</span> / 2000 · Tip: press Ctrl+Enter to check</div>
+
+      <div class="settings">
+        <label>Explain in
+          <select id="language"></select>
+        </label>
+        <label class="toggle"><input type="checkbox" id="aiExplain"> AI explanation</label>
+        <label class="toggle"><input type="checkbox" id="aiSecond"> AI second opinion</label>
+      </div>
+      <p id="aiNote" class="hint" hidden>AI is not set up on this server — the rule-based explanation will be used.</p>
+
+      <div class="buttons">
+        <button id="checkBtn" class="primary">🔍 Check message</button>
+        <button id="clearBtn" class="secondary">Clear</button>
+      </div>
+      <p id="error" class="error" role="alert" hidden></p>
+
+      <div class="side-by-side">
+        <details class="box demo">
+          <summary>🧪 Try a demo</summary>
+          <div id="demos" class="pills"></div>
+        </details>
+        <details class="box privacy">
+          <summary>🔒 Privacy note <span class="badge">Read first</span></summary>
+          <ul>
+            <li>Your message is <b>only checked, never saved</b> by ScamShield.</li>
+            <li>Pasted text is treated as <b>untrusted</b>. Any instructions written inside it are <b>never followed</b>.</li>
+            <li>ScamShield will <b>never ask</b> for your password, PIN, OTP or card details.</li>
+            <li>Links in your message are <b>never opened</b> or visited.</li>
+            <li>Before pasting, you can <b>hide private details</b> (OTP, account or card numbers, address).</li>
+            <li>If the AI explanation is on, the message is sent to <b>Google Gemini</b> to write the explanation.
+                Google's free tier may use this data to improve its services.</li>
+            <li>The result is a <b>guide, not a guarantee</b>. When in doubt, contact your bank or official source directly.</li>
+          </ul>
+        </details>
+      </div>
+    </section>
+
+    <!-- ===== Right: result ===== -->
+    <section class="right" aria-live="polite" aria-label="Result">
+      <div id="empty" class="empty">
+        <h3>Your result will appear here</h3>
+        <p>Paste a message on the left and press <b>Check message</b>, or tap a demo message.</p>
+        <div class="tip">🔑<div><b>Never share your OTP or PIN.</b><br>No bank, app or officer will ever ask for it.</div></div>
+        <div class="tip">💸<div><b>You never need a PIN to RECEIVE money.</b><br>A PIN or QR scan is only for sending.</div></div>
+        <div class="tip">👮<div><b>Police never arrest by video call.</b><br>"Digital arrest" is always a scam.</div></div>
+        <div class="tip">📞<div><b>Got scammed?</b><br>Call <b>1930</b> immediately or report at cybercrime.gov.in.</div></div>
+      </div>
+
+      <div id="result" hidden>
+        <div id="card" class="card">
+          <div class="top"><span id="icon" class="icon"></span><h2 id="title"></h2></div>
+          <p id="meaning" class="meaning"></p>
+          <div class="meter" role="img" id="meter">
+            <div class="bar"><div id="pin" class="pin"></div></div>
+            <div class="scale"><span>Safe</span><span>Suspicious</span><span>Scam</span></div>
+          </div>
+          <div id="meta" class="meta"></div>
+          <p id="mergeNote" class="meaning" hidden></p>
+        </div>
+
+        <div id="explanation" class="ai"></div>
+
+        <div id="findings"></div>
+
+        <h3 class="sec">📝 Your message</h3>
+        <div id="highlighted" class="msg"></div>
+        <p class="legend">🟥 red flag · 🟨 verify · 🟩 good sign · links are disabled</p>
+
+        <div id="report" class="report" hidden>📞 <b>Report scams:</b> cybercrime.gov.in or call <b>1930</b> (National Cyber Helpline)</div>
+
+        <details class="box">
+          <summary>📋 Copy result</summary>
+          <pre id="copyText"></pre>
+          <button id="copyBtn" class="secondary small">Copy to clipboard</button>
+        </details>
+        <details class="box">
+          <summary>🧮 How the score was calculated</summary>
+          <ul id="breakdown"></ul>
+        </details>
+      </div>
+    </section>
+  </div>
+
+  <footer>ScamShield is a student project. It can make mistakes — always verify with your bank or official sources.
+    · <a href="/docs">API docs</a></footer>
+</main>
+</body>
+</html>
